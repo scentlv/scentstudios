@@ -2070,23 +2070,33 @@
         event.preventDefault();
         const form = event.target;
         
+        // Capturar todos los campos del formulario de envío
+        const datosCliente = {
+            nombre: form.nombre.value,
+            email: form.email.value,
+            telefono: form.telefono.value,
+            direccion: form.direccion.value,
+            ciudad: form.ciudad.value
+        };
+        
         let totalVal = cart.reduce((sum, p) => sum + (p.price * p.quantity), 0);
         let resumen = cart.map(p => `${p.quantity}x ${p.name}`).join(", ");
-        let emailCliente = form.email.value;
 
         const submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.textContent = "Conectando con Flow...";
         submitBtn.disabled = true;
 
         try {
-            // Llama a la Netlify Function que creamos
+            // Envía la información completa a tu Netlify Function
             const response = await fetch('/.netlify/functions/crear-pago', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     amount: totalVal,
                     subject: `Compra Scent.cl: ${resumen}`,
-                    email: emailCliente
+                    email: datosCliente.email,
+                    customer: datosCliente, // <--- Aquí van los datos del comprador
+                    cartItems: cart         // <--- Detalle de la compra
                 })
             });
 
