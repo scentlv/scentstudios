@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>scent.cl — Mirate con estilo</title>
+
+    <meta
+        name="description"
+        content="scent.cl — Hoodies cómodos, y hechos para acompañarte todos los días."
+    >
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configuración Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: "#F8F6F1",
+                        sand: "#E8E1D5",
+                        terracotta: "#B86F52",
+                        olive: "#68705A",
+                        graphite: "#292927",
+                        soft: "#F1EFEA"
+                    },
+
+                    fontFamily: {
+                        sans: [
+                            "Inter",
+                            "ui-sans-serif",
+                            "system-ui",
+                            "sans-serif"
+                        ]
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #F8F6F1;
+            color: #292927;
+        }
+
+        /* Ocultar scrollbar */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Animación carrito */
+        @keyframes cartBounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            40% {
+                transform: scale(1.18);
+            }
+
+            70% {
+                transform: scale(.95);
+            }
+        }
+
+        .cart-animation {
+            animation: cartBounce .45s ease;
+        }
+
+        /* Toast */
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .toast-animation {
+            animation: toastIn .3s ease forwards;
+        }
+
+        /* Overlay */
+        .overlay {
+            transition: opacity .3s ease;
+        }
+
+        /* Carrito */
+        .cart-panel {
+            transition: transform .35s ease;
+        }
+
+        /* Producto */
+        .product-card img {
+            transition: transform .5s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.04);
+        }
+    </style>
+</head>
+
+<body class="font-sans">
+
+<!-- ========================================================= -->
+<!-- HEADER -->
+<!-- ========================================================= -->
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-cream/90 backdrop-blur-md border-b border-black/5">
+
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+        <div class="h-20 flex items-center justify-between">
+
+            <!-- Logo con Imagen -->
+            <a
+                href="#inicio"
+                class="flex items-center gap-2 text-2xl font-black tracking-tight"
+            >
+                <img src="Logo.png" alt="Logo scent.cl" class="w-8 h-8 object-contain">
+                <span>scent<span class="text-terracotta">.</span>cl</span>
+            </a>
+
+            <!-- Navegación Desktop -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+
+                <a
+                    href="#inicio"
+                    class="hover:text-terracotta transition"
+                >
+                    Inicio
+                </a>
+
+                <a
+                    href="#catalogo"
+                    class="hover:text-terracotta transition"
+                >
+                    Catálogo
+                </a>
+
+                <a
+                    href="#nosotros"
+                    class="hover:text-terracotta transition"
+                >
+                    Sobre Nosotros
+                </a>
+
+                <a
+                    href="#contacto"
+                    class="hover:text-terracotta transition"
+                >
+                    Contacto
+                </a>
+
+            </nav>
+
+            <!-- Acciones -->
+            <div class="flex items-center gap-3">
+
+                <!-- Buscar -->
+                <button
+                    id="searchButton"
+                    class="hidden sm:flex items-center justify-center w-10 h-10 rounded-full hover:bg-black/5 transition"
+                    aria-label="Buscar"
+                >
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+
+                <!-- Carrito -->
+                <button
+                    id="cartButton"
+                    class="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-black/5 transition"
+                    aria-label="Carrito"
+                >
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+
+                    <span
+                        id="cartCount"
+                        class="absolute -top-1 -right-1 w-5 h-5 bg-terracotta text-white text-[10px] font-bold rounded-full flex items-center justify-center"
+                    >
+                        0
+                    </span>
+                </button>
+
+                <!-- Menú móvil -->
+                <button
+                    id="mobileMenuButton"
+                    class="md:hidden flex items-center justify-center w-10 h-10"
+                    aria-label="Abrir menú"
+                >
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ========================================================= -->
+<!-- MOBILE MENU -->
+<!-- ========================================================= -->
+
+<div
+    id="mobileMenu"
+    class="fixed inset-0 z-[60] bg-cream hidden"
+>
+
+    <div class="p-6">
+
+        <div class="flex items-center justify-between mb-16">
+
+            <div class="flex items-center gap-2 text-2xl font-black">
+                <img src="WhatsApp Image 2026-08-27 at 10.46.35 PM.jpeg" alt="Logo scent.cl" class="w-8 h-8 object-contain">
+                <span>scent<span class="text-terracotta">.</span>cl</span>
+            </div>
+
+            <button id="closeMobileMenu">
+                <i data-lucide="x" class="w-7 h-7"></i>
+            </button>
+
+        </div>
+
+        <nav class="flex flex-col gap-8 text-3xl font-semibold">
+
+            <a href="#inicio" class="mobile-link">
+                Inicio
+            </a>
+
+            <a href="#catalogo" class="mobile-link">
+                Catálogo
+            </a>
+
+            <a href="#nosotros" class="mobile-link">
+                Sobre Nosotros
+            </a>
+
+            <a href="#contacto" class="mobile-link">
+                Contacto
+            </a>
+
+        </nav>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- HERO -->
+<!-- ========================================================= -->
+
+<main>
+
+<section
+    id="inicio"
+    class="pt-20 min-h-screen flex items-center"
+>
+
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 py-16 lg:py-24 w-full">
+
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+            <!-- Texto -->
+            <div>
+
+                <div
+                    class="inline-flex items-center gap-2 bg-sand/70 px-4 py-2 rounded-full text-xs font-semibold mb-6"
+                >
+                    <span class="w-2 h-2 bg-olive rounded-full"></span>
+                    Nueva colección disponible
+                </div>
+
+                <h1
+                    class="text-5xl sm:text-6xl lg:text-7xl font-black leading-[.95] tracking-tight"
+                >
+                    Mirate con estilo,
+                    <span class="text-terracotta">
+                        vete con esencia.
+                    </span>
+                </h1>
+
+                <p
+                    class="mt-7 text-base sm:text-lg text-black/60 max-w-lg leading-relaxed"
+                >
+                    Polerones diseñados para sentirte cómodo,
+                    verte bien y disfrutar cada momento.
+                    Básicos que hablan por ti.
+                </p>
+
+                <div class="mt-9 flex flex-col sm:flex-row gap-3">
+
+                    <a
+                        href="#catalogo"
+                        class="inline-flex items-center justify-center gap-2 bg-graphite text-white px-7 py-4 rounded-full font-semibold hover:bg-terracotta transition"
+                    >
+                        Comprar ahora
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+
+                    <a
+                        href="#nosotros"
+                        class="inline-flex items-center justify-center px-7 py-4 rounded-full border border-black/10 font-semibold hover:bg-white transition"
+                    >
+                        Conoce scent
+                    </a>
+
+                </div>
+
+                <!-- Mini estadísticas -->
+
+                <div class="mt-12 flex gap-8">
+
+                    <div>
+                        <p class="font-bold text-xl">
+                            +300 
+                        </p>
+
+                        <p class="text-sm text-black/50">
+                            clientes reales
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="font-bold text-xl">
+                            4.9/5
+                        </p>
+
+                        <p class="text-sm text-black/50">
+                            satisfacción
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="font-bold text-xl">
+                            Chile
+                        </p>
+
+                        <p class="text-sm text-black/50">
+                            envíos
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Imagen -->
+
+            <div class="relative">
+
+                <div class="absolute -inset-5 bg-sand/50 rounded-[3rem] -z-10"></div>
+
+                <div class="overflow-hidden rounded-[2rem] aspect-[4/5]">
+
+                    <img
+                        src="WhatsApp Image 2026-08-27 at 10.46.35 PM.jpeg"
+                        alt="Personas usando polerones"
+                        class="w-full h-full object-cover"
+                    >
+
+                </div>
+
+                <!-- Badge -->
+
+                <div
+                    class="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm px-5 py-4 rounded-2xl shadow-xl"
+                >
+
+                    <p class="text-xs text-black/50 mb-1">
+                        Tu nuevo favorito
+                    </p>
+
+                    <p class="font-bold">
+                        Hecho para todos los días.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- BENEFICIOS -->
+<!-- ========================================================= -->
+
+<section class="border-y border-black/5 bg-white">
+
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+        <div class="grid sm:grid-cols-3">
+
+            <div class="py-8 flex items-center gap-4 sm:border-r border-black/5">
+
+                <div class="w-12 h-12 rounded-full bg-soft flex items-center justify-center">
+                    <i data-lucide="truck" class="w-5 h-5"></i>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-sm">
+                        Envíos a todo Chile
+                    </h3>
+
+                    <p class="text-xs text-black/50 mt-1">
+                        Recibe tu pedido donde estés
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="py-8 flex items-center gap-4 sm:px-8 sm:border-r border-black/5">
+
+                <div class="w-12 h-12 rounded-full bg-soft flex items-center justify-center">
+                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-sm">
+                        Compra segura
+                    </h3>
+
+                    <p class="text-xs text-black/50 mt-1">
+                        Tus datos están protegidos
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="py-8 flex items-center gap-4 sm:pl-8">
+
+                <div class="w-12 h-12 rounded-full bg-soft flex items-center justify-center">
+                    <i data-lucide="heart" class="w-5 h-5"></i>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-sm">
+                        Calidad garantizada
+                    </h3>
+
+                    <p class="text-xs text-black/50 mt-1">
+                        Suavidad que vas a sentir
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- CATEGORÍAS -->
+<!-- ========================================================= -->
+
+<section
+    id="categorias"
+    class="py-24"
+>
+
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10">
+
+            <div>
+
+                <p class="text-sm font-semibold text-terracotta uppercase tracking-widest">
+                    Explora
+                </p>
+
+                <h2 class="text-4xl sm:text-5xl font-black mt-2">
+                    Encuentra tu esencia.
+                </h2>
+
+            </div>
+
+            <p class="text-black/50 max-w-sm">
+                Diseños para diferentes estilos,
+                momentos y personalidades.
+            </p>
+
+        </div>
+
+
+        <div class="grid md:grid-cols-3 gap-4">
+
+            <!-- Oversize -->
+
+            <a
+                href="#catalogo"
+                onclick="filterProducts('oversize')"
+                class="group relative overflow-hidden rounded-3xl aspect-[4/5]"
+            >
+
+                <img
+                    src="A.jpg"
+                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                    alt="Polerones oversize"
+                >
+
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+
+                <div class="absolute bottom-7 left-7 text-white">
+
+                    <p class="text-sm opacity-70">
+                        01
+                    </p>
+
+                    <h3 class="text-3xl font-bold">
+                        Oversize
+                    </h3>
+
+                    <p class="mt-2 text-sm opacity-80">
+                        Comodidad sin límites
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- Básicos -->
+
+            <a
+                href="#catalogo"
+                onclick="filterProducts('basicos')"
+                class="group relative overflow-hidden rounded-3xl aspect-[4/5]"
+            >
+
+                <img
+                    src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=900&q=85"
+                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                    alt="Polerones básicos"
+                >
+
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+
+                <div class="absolute bottom-7 left-7 text-white">
+
+                    <p class="text-sm opacity-70">
+                        02
+                    </p>
+
+                    <h3 class="text-3xl font-bold">
+                        Básicos
+                    </h3>
+
+                    <p class="mt-2 text-sm opacity-80">
+                        Menos es más
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- Estampados -->
+
+            <a
+                href="#catalogo"
+                onclick="filterProducts('estampados')"
+                class="group relative overflow-hidden rounded-3xl aspect-[4/5]"
+            >
+
+                <img
+                    src="https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=900&q=85"
+                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                    alt="Polerones estampados"
+                >
+
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+
+                <div class="absolute bottom-7 left-7 text-white">
+
+                    <p class="text-sm opacity-70">
+                        03
+                    </p>
+
+                    <h3 class="text-3xl font-bold">
+                        Estampados
+                    </h3>
+
+                    <p class="mt-2 text-sm opacity-80">
+                        Lleva tu personalidad
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- CATÁLOGO -->
+<!-- ========================================================= -->
+
+<section
+    id="catalogo"
+    class="py-24 bg-white"
+>
+
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+        <div class="text-center max-w-2xl mx-auto mb-12">
+
+            <p class="text-sm font-semibold text-terracotta uppercase tracking-widest">
+                Shop
+            </p>
+
+            <h2 class="text-4xl sm:text-5xl font-black mt-2">
+                Nuestros favoritos
+            </h2>
+
+            <p class="mt-4 text-black/50">
+                Polerones creados para acompañarte
+                todos los días.
+            </p>
+
+        </div>
+
+
+        <!-- Filtros -->
+
+        <div class="flex justify-center gap-2 mb-10 overflow-x-auto hide-scrollbar">
+
+            <button
+                onclick="filterProducts('todos')"
+                class="filter-btn active px-5 py-2.5 rounded-full text-sm font-semibold bg-graphite text-white whitespace-nowrap"
+                data-filter="todos"
+            >
+                Todos
+            </button>
+
+            <button
+                onclick="filterProducts('oversize')"
+                class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold bg-soft hover:bg-sand whitespace-nowrap"
+                data-filter="oversize"
+            >
+                Oversize
+            </button>
+
+            <button
+                onclick="filterProducts('basicos')"
+                class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold bg-soft hover:bg-sand whitespace-nowrap"
+                data-filter="basicos"
+            >
+                Básicos
+            </button>
+
+            <button
+                onclick="filterProducts('estampados')"
+                class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold bg-soft hover:bg-sand whitespace-nowrap"
+                data-filter="estampados"
+            >
+                Estampados
+            </button>
+
+        </div>
+
+
+        <!-- Productos -->
+
+        <div
+            id="productGrid"
+            class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-10"
+        >
+
+            <!-- PRODUCTO 1 -->
+
+            <article
+                class="product-card group"
+                data-category="oversize"
+            >
+
+                <div class="relative aspect-[4/5] overflow-hidden rounded-2xl bg-soft">
+
+                    <span
+                        class="absolute top-4 left-4 z-10 bg-white px-3 py-1.5 rounded-full text-xs font-bold"
+                    >
+                        Bestseller
+                    </span>
+
+                    <img
+                        src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=85"
+                        alt="Polerón Essential Oversize"
+                        class="w-full h-full object-cover"
+                    >
+
+                    <button
+                        onclick="addToCart('Essential Oversize', 39990)"
+                        class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm py-3 rounded-xl font-semibold text-sm opacity-0 group-hover:opacity-100 transition hover:bg-graphite hover:text-white"
+                    >
+                        Agregar al carrito
+                    </button>
+
+                </div>
+
+                <div class="pt-4">
+
+                    <div class="flex justify-between gap-3">
+
+                        <div>
+                            <h3 class="font-bold">
+                                Essential Oversize
+                            </h3>
+
+                            <p class="text-sm text-black/50 mt-1">
+                                Algodón premium
+                            </p>
+                        </div>
+
+                        <p class="font-bold">
+                            $39.990
+                        </p>
+
+                    </div>
+
+                    <!-- Tallas -->
+
+                    <div class="flex gap-2 mt-4">
+
+                        <button class="size-btn">S</button>
+                        <button class="size-btn">M</button>
+                        <button class="size-btn">L</button>
+                        <button class="size-btn">XL</button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- PRODUCTO 2 -->
+
+            <article
+                class="product-card group"
+                data-category="basicos"
+            >
+
+                <div class="relative aspect-[4/5] overflow-hidden rounded-2xl bg-soft">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=85"
+                        alt="Polerón Basic Sand"
+                        class="w-full h-full object-cover"
+                    >
+
+                    <button
+                        onclick="addToCart('Basic Sand', 34990)"
+                        class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm py-3 rounded-xl font-semibold text-sm opacity-0 group-hover:opacity-100 transition hover:bg-graphite hover:text-white"
+                    >
+                        Agregar al carrito
+                    </button>
+
+                </div>
+
+                <div class="pt-4">
+
+                    <div class="flex justify-between gap-3">
+
+                        <div>
+                            <h3 class="font-bold">
+                                Basic Sand
+                            </h3>
+
+                            <p class="text-sm text-black/50 mt-1">
+                                Beige
+                            </p>
+                        </div>
+
+                        <p class="font-bold">
+                            $34.990
+                        </p>
+
+                    </div>
+
+                    <div class="flex gap-2 mt-4">
+
+                        <button class="size-btn">S</button>
+                        <button class="size-btn">M</button>
+                        <button class="size-btn">L</button>
+                        <button class="size-btn">XL</button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- PRODUCTO 3 -->
+
+            <article
+                class="product-card group"
+                data-category="estampados"
+            >
+
+                <div class="relative aspect-[4/5] overflow-hidden rounded-2xl bg-soft">
+
+                    <span
+                        class="absolute top-4 left-4 z-10 bg-terracotta text-white px-3 py-1.5 rounded-full text-xs font-bold"
+                    >
+                        Nuevo
+                    </span>
+
+                    <img
+                        src="https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=800&q=85"
+                        alt="Polerón Scent Graphic"
+                        class="w-full h-full object-cover"
+                    >
+
+                    <button
+                        onclick="addToCart('Scent Graphic', 44990)"
+                        class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm py-3 rounded-xl font-semibold text-sm opacity-0 group-hover:opacity-100 transition hover:bg-graphite hover:text-white"
+                    >
+                        Agregar al carrito
+                    </button>
+
+                </div>
+
+                <div class="pt-4">
+
+                    <div class="flex justify-between gap-3">
+
+                        <div>
+                            <h3 class="font-bold">
+                                Scent Graphic
+                            </h3>
+
+                            <p class="text-sm text-black/50 mt-1">
+                                Print exclusivo
+                            </p>
+                        </div>
+
+                        <p class="font-bold">
+                            $44.990
+                        </p>
+
+                    </div>
+
+                    <div class="flex gap-2 mt-4">
+
+                        <button class="size-btn">S</button>
+                        <button class="size-btn">M</button>
+                        <button class="size-btn">L</button>
+                        <button class="size-btn">XL</button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- PRODUCTO 4 -->
+
+            <article
+                class="product-card group"
+                data-category="oversize"
+            >
+
+                <div class="relative aspect-[4/5] overflow-hidden rounded-2xl bg-soft">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=85"
+                        alt="Polerón Olive Heavy"
+                        class="w-full h-full object-cover"
+                    >
+
+                    <button
+                        onclick="addToCart('Olive Heavy', 42990)"
+                        class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm py-3 rounded-xl font-semibold text-sm opacity-0 group-hover:opacity-100 transition hover:bg-graphite hover:text-white"
+                    >
+                        Agregar al carrito
+                    </button>
+
+                </div>
+
+                <div class="pt-4">
+
+                    <div class="flex justify-between gap-3">
+
+                        <div>
+                            <h3 class="font-bold">
+                                Olive Heavy
+                            </h3>
+
+                            <p class="text-sm text-black/50 mt-1">
+                                Verde olivo
+                            </p>
+                        </div>
+
+                        <p class="font-bold">
+                            $42.990
+                        </p>
+
+                    </div>
+
+                    <div class="flex gap-2 mt-4">
+
+                        <button class="size-btn">S</button>
+                        <button class="size-btn">M</button>
+                        <button class="size-btn">L</button>
+                        <button class="size-btn">XL</button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- NOSOTROS -->
+<!-- ========================================================= -->
+
+<section
+    id="nosotros"
+    class="py-24"
+>
+
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+            <div class="overflow-hidden rounded-[2rem] aspect-square">
+
+                <img
+                    src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=85"
+                    alt="Estilo scent.cl"
+                    class="w-full h-full object-cover"
+                >
+
+            </div>
+
+            <div>
+
+                <p class="text-sm font-semibold text-terracotta uppercase tracking-widest">
+                    Nuestra esencia
+                </p>
+
+                <h2 class="text-4xl sm:text-5xl font-black mt-3">
+                    No queremos que uses cualquier polerón.
+                </h2>
+
+                <p class="mt-6 text-black/60 leading-relaxed">
+                    En scent creemos que la ropa que usas debería
+                    sentirse tan bien como se ve.
+                </p>
+
+                <p class="mt-4 text-black/60 leading-relaxed">
+                    Creamos prendas cómodas, simples y con
+                    personalidad para acompañarte en tu día a día.
+                </p>
+
+                <div class="mt-8 flex items-center gap-3">
+
+                    <div class="w-10 h-10 rounded-full bg-terracotta"></div>
+
+                    <div>
+                        <p class="font-bold">
+                            scent.cl
+                        </p>
+
+                        <p class="text-sm text-black/50">
+                            Viste tu esencia.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- NEWSLETTER -->
+<!-- ========================================================= -->
+
+<section class="py-20">
+
+    <div class="max-w-5xl mx-auto px-5">
+
+        <div class="bg-graphite text-white rounded-[2rem] p-8 sm:p-12 lg:p-16 text-center">
+
+            <p class="text-terracotta font-bold text-sm uppercase tracking-widest">
+                10% de descuento
+            </p>
+
+            <h2 class="text-4xl sm:text-5xl font-black mt-3">
+                Quédate en nuestra esencia.
+            </h2>
+
+            <p class="text-white/60 mt-4 max-w-md mx-auto">
+                Suscríbete y recibe novedades, lanzamientos
+                y descuentos directamente en tu correo.
+            </p>
+
+            <form
+                id="newsletterForm"
+                class="mt-8 max-w-md mx-auto flex flex-col sm:flex-row gap-2"
+            >
+
+                <input
+                    type="email"
+                    required
+                    placeholder="Tu correo electrónico"
+                    class="flex-1 bg-white/10 border border-white/10 rounded-full px-5 py-3.5 outline-none focus:border-terracotta"
+                >
+
+                <button
+                    class="bg-white text-graphite px-6 py-3.5 rounded-full font-bold hover:bg-terracotta hover:text-white transition"
+                >
+                    Suscribirme
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- CONTACTO -->
+<!-- ========================================================= -->
+
+<section
+    id="contacto"
+    class="py-20 bg-white"
+>
+
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+        <div class="text-center">
+
+            <p class="text-sm font-semibold text-terracotta uppercase tracking-widest">
+                Contacto
+            </p>
+
+            <h2 class="text-4xl font-black mt-2">
+                ¿Tienes alguna pregunta?
+            </h2>
+
+            <p class="mt-4 text-black/50">
+                Estamos para ayudarte.
+            </p>
+
+            <a
+                href="mailto:hola@scent.cl"
+                class="inline-flex items-center gap-2 mt-7 font-semibold hover:text-terracotta transition"
+            >
+                scentlvchile@gmail.com
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ========================================================= -->
+<!-- FOOTER -->
+<!-- ========================================================= -->
+
+<footer class="bg-graphite text-white">
+
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 py-16">
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
+
+            <div>
+
+                <div class="text-2xl font-black">
+                    scent<span class="text-terracotta">.</span>cl
+                </div>
+
+                <p class="text-white/50 text-sm leading-relaxed mt-4 max-w-xs">
+                    Viste comodidad. Viste estilo.
+                    Viste tu esencia.
+                </p>
+
+                <div class="flex gap-3 mt-6">
+
+                    <a
+                        href="#"
+                        class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-terracotta transition"
+                        aria-label="Instagram"
+                    >
+                        <i data-lucide="instagram" class="w-4 h-4"></i>
+                    </a>
+
+                    <a
+                        href="#"
+                        class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-terracotta transition"
+                        aria-label="TikTok"
+                    >
+                        <span class="font-bold text-xs">
+                            TT
+                        </span>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <h3 class="font-bold">
+                    Tienda
+                </h3>
+
+                <ul class="mt-5 space-y-3 text-sm text-white/50">
+
+                    <li>
+                        <a href="#catalogo" class="hover:text-white transition">
+                            Catálogo
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#categorias" class="hover:text-white transition">
+                            Categorías
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#nosotros" class="hover:text-white transition">
+                            Sobre nosotros
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div>
+
+                <h3 class="font-bold">
+                    Ayuda
+                </h3>
+
+                <ul class="mt-5 space-y-3 text-sm text-white/50">
+
+                    <li>
+                        <a href="#" class="hover:text-white transition">
+                            Cambios y devoluciones
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="hover:text-white transition">
+                            Envíos
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="hover:text-white transition">
+                            Preguntas frecuentes
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div>
+
+                <h3 class="font-bold">
+                    Métodos de pago
+                </h3>
+
+                <p class="text-sm text-white/50 mt-5">
+                    Aceptamos tarjetas de débito,
+                    crédito y otros medios de pago.
+                </p>
+
+                <div class="flex gap-2 mt-5">
+
+                    <span class="bg-white/10 rounded px-3 py-2 text-xs">
+                        VISA
+                    </span>
+
+                    <span class="bg-white/10 rounded px-3 py-2 text-xs">
+                        Mastercard
+                    </span>
+
+                    <span class="bg-white/10 rounded px-3 py-2 text-xs">
+                        Webpay
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="border-t border-white/10 mt-14 pt-7 flex flex-col sm:flex-row justify-between gap-3 text-xs text-white/40">
+
+            <p>
+                © 2026 scent.cl — Todos los derechos reservados.
+            </p>
+
+            <p>
+                Hecho con esencia.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- ========================================================= -->
+<!-- CART OVERLAY -->
+<!-- ========================================================= -->
+
+<div
+    id="cartOverlay"
+    class="fixed inset-0 bg-black/40 z-[70] opacity-0 pointer-events-none overlay"
+></div>
+
+
+<!-- ========================================================= -->
+<!-- CART -->
+<!-- ========================================================= -->
+
+<aside
+    id="cartPanel"
+    class="cart-panel fixed top-0 right-0 bottom-0 w-full sm:max-w-md bg-cream z-[80] translate-x-full flex flex-col"
+>
+
+    <div class="p-6 border-b border-black/5 flex items-center justify-between">
+
+        <div>
+
+            <p class="text-sm text-black/50">
+                Tu selección
+            </p>
+
+            <h2 class="text-2xl font-black">
+                Carrito
+            </h2>
+
+        </div>
+
+        <button
+            id="closeCart"
+            class="w-10 h-10 rounded-full hover:bg-black/5 flex items-center justify-center"
+        >
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+
+    </div>
+
+
+    <div
+        id="cartItems"
+        class="flex-1 overflow-y-auto p-6"
+    >
+
+        <div
+            id="emptyCart"
+            class="h-full flex flex-col items-center justify-center text-center"
+        >
+
+            <div class="w-16 h-16 rounded-full bg-soft flex items-center justify-center">
+
+                <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+
+            </div>
+
+            <h3 class="font-bold mt-5">
+                Tu carrito está vacío
+            </h3>
+
+            <p class="text-sm text-black/50 mt-2">
+                Agrega algo que te guste.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="cartFooter"
+        class="hidden border-t border-black/5 p-6"
+    >
+
+        <div class="flex justify-between font-bold text-lg mb-5">
+
+            <span>
+                Total
+            </span>
+
+            <span id="cartTotal">
+                $0
+            </span>
+
+        </div>
+
+        <button
+            onclick="checkout()"
+            class="w-full bg-graphite text-white py-4 rounded-full font-bold hover:bg-terracotta transition"
+        >
+            Finalizar compra
+        </button>
+
+        <p class="text-center text-xs text-black/40 mt-3">
+            Compra segura y protegida
+        </p>
+
+    </div>
+
+</aside>
+
+
+<!-- ========================================================= -->
+<!-- MODAL DE DATOS DE ENVÍO (CONECTADO A LA NETLIFY FUNCTION) -->
+<!-- ========================================================= -->
+
+<div
+    id="checkoutModal"
+    class="fixed inset-0 z-[110] bg-black/50 hidden flex items-center justify-center p-5"
+>
+    <div class="bg-cream rounded-3xl max-w-lg w-full p-8 relative shadow-2xl">
+        
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-2xl font-black">Datos de Envío</h3>
+            <button onclick="cerrarCheckoutModal()" class="w-10 h-10 rounded-full hover:bg-black/5 flex items-center justify-center">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <form 
+            onsubmit="manejarEnvioFormulario(event)"
+            class="space-y-4"
+        >
+            <div>
+                <label class="block text-sm font-bold mb-1">Nombre completo</label>
+                <input type="text" name="nombre" required class="w-full bg-white border border-black/10 rounded-xl px-4 py-3 outline-none focus:border-terracotta">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold mb-1">Correo electrónico</label>
+                <input type="email" name="email" required class="w-full bg-white border border-black/10 rounded-xl px-4 py-3 outline-none focus:border-terracotta">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold mb-1">Teléfono / WhatsApp</label>
+                <input type="tel" name="telefono" required class="w-full bg-white border border-black/10 rounded-xl px-4 py-3 outline-none focus:border-terracotta">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold mb-1">Dirección de despacho</label>
+                <input type="text" name="direccion" required class="w-full bg-white border border-black/10 rounded-xl px-4 py-3 outline-none focus:border-terracotta">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold mb-1">Comuna / Ciudad</label>
+                <input type="text" name="ciudad" required class="w-full bg-white border border-black/10 rounded-xl px-4 py-3 outline-none focus:border-terracotta">
+            </div>
+
+            <button 
+                type="submit"
+                class="w-full bg-graphite text-white py-4 rounded-full font-bold hover:bg-terracotta transition mt-4"
+            >
+                Continuar al pago en Flow
+            </button>
+        </form>
+
+    </div>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- SEARCH MODAL -->
+<!-- ========================================================= -->
+
+<div
+    id="searchModal"
+    class="fixed inset-0 z-[100] bg-cream hidden"
+>
+
+    <div class="max-w-3xl mx-auto px-5 pt-10">
+
+        <div class="flex justify-between items-center mb-10">
+
+            <span class="text-2xl font-black">
+                Buscar
+            </span>
+
+            <button id="closeSearch">
+
+                <i data-lucide="x" class="w-6 h-6"></i>
+
+            </button>
+
+        </div>
+
+        <div class="relative">
+
+            <i
+                data-lucide="search"
+                class="absolute left-5 top-1/2 -translate-y-1/2 text-black/40"
+            ></i>
+
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Busca un polerón..."
+                class="w-full bg-white rounded-2xl px-14 py-5 text-lg outline-none border border-black/5 focus:border-terracotta"
+            >
+
+        </div>
+
+        <div
+            id="searchResults"
+            class="mt-8"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- TOAST -->
+<!-- ========================================================= -->
+
+<div
+    id="toast"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[120] bg-graphite text-white px-5 py-3 rounded-full text-sm font-semibold opacity-0 pointer-events-none"
+>
+    Producto agregado ✓
+</div>
+
+
+<!-- ========================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================================= -->
+
+<script>
+
+    // Inicializar iconos
+    lucide.createIcons();
+
+
+    // ========================================================
+    // VARIABLES
+    // ========================================================
+
+    let cart = [];
+
+
+    // ========================================================
+    // ELEMENTOS
+    // ========================================================
+
+    const cartButton = document.getElementById("cartButton");
+    const cartPanel = document.getElementById("cartPanel");
+    const cartOverlay = document.getElementById("cartOverlay");
+    const closeCart = document.getElementById("closeCart");
+
+    const cartCount = document.getElementById("cartCount");
+    const cartItems = document.getElementById("cartItems");
+    const cartFooter = document.getElementById("cartFooter");
+    const cartTotal = document.getElementById("cartTotal");
+    const emptyCart = document.getElementById("emptyCart");
+
+    const toast = document.getElementById("toast");
+
+
+    // ========================================================
+    // ABRIR CARRITO
+    // ========================================================
+
+    function openCart() {
+
+        cartPanel.classList.remove("translate-x-full");
+
+        cartOverlay.classList.remove(
+            "opacity-0",
+            "pointer-events-none"
+        );
+
+    }
+
+
+    // ========================================================
+    // CERRAR CARRITO
+    // ========================================================
+
+    function closeCartPanel() {
+
+        cartPanel.classList.add("translate-x-full");
+
+        cartOverlay.classList.add(
+            "opacity-0",
+            "pointer-events-none"
+        );
+
+    }
+
+
+    cartButton.addEventListener("click", openCart);
+
+    closeCart.addEventListener("click", closeCartPanel);
+
+    cartOverlay.addEventListener("click", closeCartPanel);
+
+
+    // ========================================================
+    // AGREGAR PRODUCTO
+    // ========================================================
+
+    function addToCart(name, price) {
+
+        const existingProduct = cart.find(
+            product => product.name === name
+        );
+
+
+        if (existingProduct) {
+
+            existingProduct.quantity++;
+
+        } else {
+
+            cart.push({
+                name: name,
+                price: price,
+                quantity: 1
+            });
+
+        }
+
+
+        updateCart();
+
+        showToast();
+
+        // Animación carrito
+
+        cartCount.classList.remove("cart-animation");
+
+        void cartCount.offsetWidth;
+
+        cartCount.classList.add("cart-animation");
+
+    }
+
+
+    // ========================================================
+    // ACTUALIZAR CARRITO
+    // ========================================================
+
+    function updateCart() {
+
+        const quantity = cart.reduce(
+            (total, product) => total + product.quantity,
+            0
+        );
+
+        cartCount.textContent = quantity;
+
+
+        // Vacío
+
+        if (cart.length === 0) {
+
+            emptyCart.classList.remove("hidden");
+
+            cartFooter.classList.add("hidden");
+
+            return;
+
+        }
+
+
+        emptyCart.classList.add("hidden");
+
+        cartFooter.classList.remove("hidden");
+
+
+        // Limpiar items
+
+        cartItems.innerHTML = "";
+
+
+        // Productos
+
+        cart.forEach((product, index) => {
+
+            const item = document.createElement("div");
+
+            item.className =
+                "flex justify-between gap-4 py-5 border-b border-black/5";
+
+
+            item.innerHTML = `
+
+                <div class="flex-1">
+
+                    <h3 class="font-bold">
+                        ${product.name}
+                    </h3>
+
+                    <p class="text-sm text-black/50 mt-1">
+                        $${product.price.toLocaleString("es-CL")}
+                    </p>
+
+                    <div class="flex items-center gap-3 mt-3">
+
+                        <button
+                            onclick="changeQuantity(${index}, -1)"
+                            class="w-7 h-7 rounded-full bg-soft"
+                        >
+                            −
+                        </button>
+
+                        <span class="text-sm font-semibold">
+                            ${product.quantity}
+                        </span>
+
+                        <button
+                            onclick="changeQuantity(${index}, 1)"
+                            class="w-7 h-7 rounded-full bg-soft"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="text-right">
+
+                    <p class="font-bold">
+                        $${(
+                            product.price *
+                            product.quantity
+                        ).toLocaleString("es-CL")}
+                    </p>
+
+                    <button
+                        onclick="removeProduct(${index})"
+                        class="text-xs text-red-500 mt-3"
+                    >
+                        Eliminar
+                    </button>
+
+                </div>
+
+            `;
+
+            cartItems.appendChild(item);
+
+        });
+
+
+        // Total
+
+        const total = cart.reduce(
+            (sum, product) =>
+                sum + product.price * product.quantity,
+            0
+        );
+
+
+        cartTotal.textContent =
+            "$" + total.toLocaleString("es-CL");
+
+    }
+
+
+    // ========================================================
+    // CAMBIAR CANTIDAD
+    // ========================================================
+
+    function changeQuantity(index, amount) {
+
+        cart[index].quantity += amount;
+
+
+        if (cart[index].quantity <= 0) {
+
+            cart.splice(index, 1);
+
+        }
+
+
+        updateCart();
+
+    }
+
+
+    // ========================================================
+    // ELIMINAR PRODUCTO
+    // ========================================================
+
+    function removeProduct(index) {
+
+        cart.splice(index, 1);
+
+        updateCart();
+
+    }
+
+
+    // ========================================================
+    // TOAST
+    // ========================================================
+
+    function showToast() {
+
+        toast.classList.remove(
+            "opacity-0",
+            "toast-animation"
+        );
+
+        void toast.offsetWidth;
+
+        toast.classList.add("toast-animation");
+
+
+        setTimeout(() => {
+
+            toast.classList.add("opacity-0");
+
+        }, 1800);
+
+    }
+
+
+    // ========================================================
+    // FILTROS
+    // ========================================================
+
+    function filterProducts(category) {
+
+        const products =
+            document.querySelectorAll(".product-card");
+
+        const buttons =
+            document.querySelectorAll(".filter-btn");
+
+
+        buttons.forEach(button => {
+
+            button.classList.remove(
+                "bg-graphite",
+                "text-white"
+            );
+
+            button.classList.add("bg-soft");
+
+        });
+
+
+        const activeButton =
+            document.querySelector(
+                `[data-filter="${category}"]`
+            );
+
+
+        if (activeButton) {
+
+            activeButton.classList.remove("bg-soft");
+
+            activeButton.classList.add(
+                "bg-graphite",
+                "text-white"
+            );
+
+        }
+
+
+        products.forEach(product => {
+
+            if (
+                category === "todos" ||
+                product.dataset.category === category
+            ) {
+
+                product.classList.remove("hidden");
+
+            } else {
+
+                product.classList.add("hidden");
+
+            }
+
+        });
+
+
+        // Scroll al catálogo
+
+        document
+            .getElementById("catalogo")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+
+    }
+
+
+    // ========================================================
+    // SELECTOR DE TALLAS
+    // ========================================================
+
+    document.addEventListener("click", event => {
+
+        if (
+            event.target.classList.contains("size-btn")
+        ) {
+
+            const parent =
+                event.target.parentElement;
+
+
+            parent
+                .querySelectorAll(".size-btn")
+                .forEach(button => {
+
+                    button.classList.remove(
+                        "bg-graphite",
+                        "text-white"
+                    );
+
+                    button.classList.add("bg-soft");
+
+                });
+
+
+            event.target.classList.remove("bg-soft");
+
+            event.target.classList.add(
+                "bg-graphite",
+                "text-white"
+            );
+
+        }
+
+    });
+
+
+    // ========================================================
+    // BUSCADOR
+    // ========================================================
+
+    const searchModal =
+        document.getElementById("searchModal");
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const searchResults =
+        document.getElementById("searchResults");
+
+
+    document
+        .getElementById("searchButton")
+        .addEventListener("click", () => {
+
+            searchModal.classList.remove("hidden");
+
+            setTimeout(() => {
+                searchInput.focus();
+            }, 100);
+
+        });
+
+
+    document
+        .getElementById("closeSearch")
+        .addEventListener("click", () => {
+
+            searchModal.classList.add("hidden");
+
+        });
+
+
+    searchInput.addEventListener(
+        "input",
+        () => {
+
+            const value =
+                searchInput.value.toLowerCase().trim();
+
+
+            const products =
+                document.querySelectorAll(".product-card");
+
+
+            if (!value) {
+
+                searchResults.innerHTML = "";
+
+                return;
+
+            }
+
+
+            let found = 0;
+
+
+            products.forEach(product => {
+
+                const title =
+                    product
+                        .querySelector("h3")
+                        .textContent
+                        .toLowerCase();
+
+
+                if (title.includes(value)) {
+
+                    found++;
+
+                }
+
+            });
+
+
+            if (found === 0) {
+
+                searchResults.innerHTML = `
+
+                    <div class="text-center py-10">
+
+                        <p class="font-bold">
+                            No encontramos resultados.
+                        </p>
+
+                        <p class="text-sm text-black/50 mt-2">
+                            Intenta con otro término.
+                        </p>
+
+                    </div>
+
+                `;
+
+            } else {
+
+                searchResults.innerHTML = `
+
+                    <div class="bg-white rounded-2xl p-5">
+
+                        <p class="font-semibold">
+                            ${found} producto(s) encontrado(s)
+                        </p>
+
+                        <button
+                            onclick="
+                                document
+                                .getElementById('searchModal')
+                                .classList.add('hidden');
+
+                                document
+                                .getElementById('catalogo')
+                                .scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            "
+                            class="mt-4 text-sm text-terracotta font-bold"
+                        >
+                            Ver productos →
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+    );
+
+
+    // ========================================================
+    // CHECKOUT & NETLIFY FUNCTION BRIDGE
+    // ========================================================
+
+    function checkout() {
+
+        if (cart.length === 0) {
+            alert("Tu carrito está vacío.");
+            return;
+        }
+
+        closeCartPanel();
+        document.getElementById("checkoutModal").classList.remove("hidden");
+        lucide.createIcons();
+
+    }
+
+    function cerrarCheckoutModal() {
+        document.getElementById("checkoutModal").classList.add("hidden");
+    }
+
+    async function manejarEnvioFormulario(event) {
+        event.preventDefault();
+        const form = event.target;
+        
+        let totalVal = cart.reduce((sum, p) => sum + (p.price * p.quantity), 0);
+        let resumen = cart.map(p => `${p.quantity}x ${p.name}`).join(", ");
+        let emailCliente = form.email.value;
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.textContent = "Conectando con Flow...";
+        submitBtn.disabled = true;
+
+        try {
+            // Llama a la Netlify Function que creamos
+            const response = await fetch('/.netlify/functions/crear-pago', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    amount: totalVal,
+                    subject: `Compra Scent.cl: ${resumen}`,
+                    email: emailCliente
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.redirectUrl) {
+                cart = [];
+                updateCart();
+                cerrarCheckoutModal();
+                window.location.href = data.redirectUrl;
+            } else {
+                alert("Hubo un problema al generar el pago: " + (data.error || "Inténtalo nuevamente."));
+                submitBtn.textContent = "Continuar al pago en Flow";
+                submitBtn.disabled = false;
+            }
+
+        } catch (error) {
+            alert("Error de conexión al procesar el pago.");
+            console.error(error);
+            submitBtn.textContent = "Continuar al pago en Flow";
+            submitBtn.disabled = false;
+        }
+    }
+
+
+    // ========================================================
+    // NEWSLETTER
+    // ========================================================
+
+    document
+        .getElementById("newsletterForm")
+        .addEventListener("submit", event => {
+
+            event.preventDefault();
+
+            alert(
+                "¡Listo! Revisa tu correo para recibir tu 10% de descuento."
+            );
+
+            event.target.reset();
+
+        });
+
+
+    // ========================================================
+    // MENÚ MÓVIL
+    // ========================================================
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+
+    document
+        .getElementById("mobileMenuButton")
+        .addEventListener("click", () => {
+
+            mobileMenu.classList.remove("hidden");
+
+        });
+
+
+    document
+        .getElementById("closeMobileMenu")
+        .addEventListener("click", () => {
+
+            mobileMenu.classList.add("hidden");
+
+        });
+
+
+    document
+        .querySelectorAll(".mobile-link")
+        .forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mobileMenu.classList.add("hidden");
+
+            });
+
+        });
+
+</script>
+
+</body>
+</html>
