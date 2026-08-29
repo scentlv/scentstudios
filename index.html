@@ -727,7 +727,7 @@
                     >
 
                     <button
-                        onclick="addToCart('Essential Oversize', 39990)"
+                        onclick="addToCart('Essential Oversize', 39990, this)"
                         class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm py-3 rounded-xl font-semibold text-sm opacity-0 group-hover:opacity-100 transition hover:bg-graphite hover:text-white"
                     >
                         Agregar al carrito
@@ -759,10 +759,10 @@
 
                     <div class="flex gap-2 mt-4">
 
-                        <button class="size-btn">S</button>
-                        <button class="size-btn">M</button>
-                        <button class="size-btn">L</button>
-                        <button class="size-btn">XL</button>
+                        <button class="size-btn bg-graphite text-white px-3 py-1 rounded text-sm">S</button>
+                        <button class="size-btn bg-soft px-3 py-1 rounded text-sm">M</button>
+                        <button class="size-btn bg-soft px-3 py-1 rounded text-sm">L</button>
+                        <button class="size-btn bg-soft px-3 py-1 rounded text-sm">XL</button>
 
                     </div>
 
@@ -787,7 +787,7 @@
                     >
 
                     <button
-                        onclick="addToCart('Basic Sand', 34990)"
+                        onclick="addToCart('Basic Sand', 34990, this)"
                         class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm py-3 rounded-xl font-semibold text-sm opacity-0 group-hover:opacity-100 transition hover:bg-graphite hover:text-white"
                     >
                         Agregar al carrito
@@ -817,10 +817,10 @@
 
                     <div class="flex gap-2 mt-4">
 
-                        <button class="size-btn">S</button>
-                        <button class="size-btn">M</button>
-                        <button class="size-btn">L</button>
-                        <button class="size-btn">XL</button>
+                        <button class="size-btn bg-graphite text-white px-3 py-1 rounded text-sm">S</button>
+                        <button class="size-btn bg-soft px-3 py-1 rounded text-sm">M</button>
+                        <button class="size-btn bg-soft px-3 py-1 rounded text-sm">L</button>
+                        <button class="size-btn bg-soft px-3 py-1 rounded text-sm">XL</button>
 
                     </div>
 
@@ -851,7 +851,7 @@
                     >
 
                     <button
-                        onclick="addToCart('Scent Graphic', 44990)"
+                        onclick="addToCart('Scent Graphic', 44990, this)"
                         class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm py-3 rounded-xl font-semibold text-sm opacity-0 group-hover:opacity-100 transition hover:bg-graphite hover:text-white"
                     >
                         Agregar al carrito
@@ -881,10 +881,10 @@
 
                     <div class="flex gap-2 mt-4">
 
-                        <button class="size-btn">S</button>
-                        <button class="size-btn">M</button>
-                        <button class="size-btn">L</button>
-                        <button class="size-btn">XL</button>
+                        <button class="size-btn bg-graphite text-white px-3 py-1 rounded text-sm">S</button>
+                        <button class="size-btn bg-soft px-3 py-1 rounded text-sm">M</button>
+                        <button class="size-btn bg-soft px-3 py-1 rounded text-sm">L</button>
+                        <button class="size-btn bg-soft px-3 py-1 rounded text-sm">XL</button>
 
                     </div>
 
@@ -909,7 +909,7 @@
                     >
 
                     <button
-                        onclick="addToCart('Olive Heavy', 42990)"
+                        onclick="addToCart('Olive Heavy', 42990, this)"
                         class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm py-3 rounded-xl font-semibold text-sm opacity-0 group-hover:opacity-100 transition hover:bg-graphite hover:text-white"
                     >
                         Agregar al carrito
@@ -939,10 +939,10 @@
 
                     <div class="flex gap-2 mt-4">
 
-                        <button class="size-btn">S</button>
-                        <button class="size-btn">M</button>
-                        <button class="size-btn">L</button>
-                        <button class="size-btn">XL</button>
+                        <button class="size-btn bg-graphite text-white px-3 py-1 rounded text-sm">S</button>
+                        <button class="size-btn bg-soft px-3 py-1 rounded text-sm">M</button>
+                        <button class="size-btn bg-soft px-3 py-1 rounded text-sm">L</button>
+                        <button class="size-btn bg-soft px-3 py-1 rounded text-sm">XL</button>
 
                     </div>
 
@@ -1383,7 +1383,7 @@
 
 
 <!-- ========================================================= -->
-<!-- MODAL DE DATOS DE ENVÍO (CONECTADO A LA NETLIFY FUNCTION) -->
+<!-- MODAL DE DATOS DE ENVÍO -->
 <!-- ========================================================= -->
 
 <div
@@ -1578,13 +1578,20 @@
 
 
     // ========================================================
-    // AGREGAR PRODUCTO
+    // AGREGAR PRODUCTO (CON TALLA)
     // ========================================================
 
-    function addToCart(name, price) {
+    function addToCart(name, price, buttonElement) {
+        // Encontrar la tarjeta del producto para capturar la talla activa
+        const productCard = buttonElement.closest('.product-card');
+        const selectedSizeBtn = productCard.querySelector('.size-btn.bg-graphite');
+        
+        // Si por alguna razón no seleccionó ninguna, por defecto toma 'M'
+        const size = selectedSizeBtn ? selectedSizeBtn.textContent : 'M';
 
+        // Buscar si ya existe el mismo producto con la misma talla
         const existingProduct = cart.find(
-            product => product.name === name
+            product => product.name === name && product.size === size
         );
 
 
@@ -1597,6 +1604,7 @@
             cart.push({
                 name: name,
                 price: price,
+                size: size,
                 quantity: 1
             });
 
@@ -1672,6 +1680,10 @@
                     <h3 class="font-bold">
                         ${product.name}
                     </h3>
+
+                    <p class="text-xs font-semibold text-terracotta mt-0.5">
+                        Talla: ${product.size}
+                    </p>
 
                     <p class="text-sm text-black/50 mt-1">
                         $${product.price.toLocaleString("es-CL")}
@@ -2080,7 +2092,8 @@
         };
         
         let totalVal = cart.reduce((sum, p) => sum + (p.price * p.quantity), 0);
-        let resumen = cart.map(p => `${p.quantity}x ${p.name}`).join(", ");
+        // Ahora el resumen incluye explícitamente la talla elegida de cada producto
+        let resumen = cart.map(p => `${p.quantity}x ${p.name} (Talla: ${p.size})`).join(", ");
 
         const submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.textContent = "Conectando con Flow...";
@@ -2095,8 +2108,8 @@
                     amount: totalVal,
                     subject: `Compra Scent.cl: ${resumen}`,
                     email: datosCliente.email,
-                    customer: datosCliente, // <--- Aquí van los datos del comprador
-                    cartItems: cart         // <--- Detalle de la compra
+                    customer: datosCliente, 
+                    cartItems: cart         
                 })
             });
 
